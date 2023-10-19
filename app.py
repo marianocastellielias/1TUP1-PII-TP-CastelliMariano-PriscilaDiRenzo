@@ -37,7 +37,7 @@ class Profesor(Usuario):
         return user_profesor
 
     def dictar_curso(self, curso):
-        raise NotImplementedError() #Todavía no lo hice.
+        raise NotImplementedError() #Todavía no lo hice..
 
 class Curso:
     def __init__(self, nombre_curso: str, contrasenia_matriculacion: str):
