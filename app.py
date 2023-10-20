@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from funciones import profesores_registrados
+from funciones import *
 
 
 class Usuario (ABC):
@@ -24,7 +24,19 @@ class Usuario (ABC):
             validado = True
 
         return validado
+    
+class Estudiante(Usuario):
+    def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str, legajo: int, anio_inscripcion: int):
+        super().__init__(nombre, apellido, email, contrasenia)
+        self.legajo = legajo
+        self.anio_inscripcion = anio_inscripcion
 
+    def __str__(self):
+        user_alumno = self.legajo + self.anio_inscripcion
+        return user_alumno
+
+    def matricular_en_curso(self, curso):
+        self.mis_cursos.append(curso)
 
 class Profesor(Usuario):
     def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str, titulo: str, anio_egreso: int):
