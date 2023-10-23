@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import random
+import string
 
 
 class Usuario (ABC):
@@ -96,7 +98,9 @@ class Curso:
         return self.nombre_curso
     
     def generar_contrasenia(self) -> str:
-        raise NotImplementedError() #Todavía no lo hice.
+            characters = string.ascii_letters + string.digits
+            cod = ''.join(random.choice(characters) for i in range(4))
+            return cod
         
         
 #Datos
