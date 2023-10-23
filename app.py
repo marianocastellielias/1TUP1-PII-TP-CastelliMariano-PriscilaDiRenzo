@@ -1,6 +1,6 @@
 import funciones
 
-    
+ 
 continuar = True
 
 while continuar == True:

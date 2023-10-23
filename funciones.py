@@ -4,6 +4,7 @@ import string
 
 
 
+
 class Usuario (ABC):
     
     def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str):
@@ -131,6 +132,7 @@ def validar_profesor():
     correoProfesor = input("Ingrese su email:")
     for profesor in profesores_registrados:
         if profesor.email == correoProfesor:
+            accesoCorreoProfe = True
             print("Usted está en la base de datos de profesores.")
             contraseña_profesor = input("Ingrese su contraseña")
             if profesor.contrasenia == contraseña_profesor:
@@ -164,7 +166,8 @@ def submenuProfesor(dictar_curso):
             print(f"Curso Nº. {contador}: {cursosProfe}\n")
             opElegirCurso = int(input())
             print(cursosProfe[opElegirCurso])
-
+    if opProfe == 3:
+        menu_principal()
 
 alumnos_registrados = []
 alumno1 = Estudiante("Marcelo", "Gómez", "marcelogomez@gmail.com", "1234", "10001", "2020")
