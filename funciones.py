@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import random
+import string
 
 
 
@@ -67,7 +69,10 @@ class Estudiante(Usuario):
         for x in self.mis_cursos:
             cursos_estudiante.append(x.nombre_curso)
 
-        return cursos_estudiante     
+        return cursos_estudiante
+
+    
+        
 
         
         
@@ -103,7 +108,9 @@ class Curso:
         return self.nombre_curso
     
     def generar_contrasenia(self) -> str:
-        raise NotImplementedError() #Todavía no lo hice.
+            characters = string.ascii_letters + string.digits
+            cod = ''.join(random.choice(characters) for i in range(4))
+            return cod
         
         
 #Datos de profesores 
@@ -211,9 +218,22 @@ def menu_principal(dictar_curso):
         else:
             pass
         return True
+<<<<<<< HEAD
     if op== 2:
         validar_profesor()
         submenuProfesor(dictar_curso)
+=======
+    
+    if op == 3:
+        cursos_registrados.sort(key=lambda curso: curso.nombre_curso)
+        print("\n--------------------------\n")
+        for x in range(len(cursos_registrados)):
+            print("• Materia: ", cursos_registrados[x].nombre_curso, "\n• Carrera: Tecnicatura Universitaria en Programación\n")
+            
+        print("--------------------------")
+        return True
+
+>>>>>>> e2697393af71d67b64adc9fefcbdf234e6ea3e8b
     if op == 4:
         return False
 
@@ -250,21 +270,25 @@ def submenu_alumno(alumno_ingresado1):
     continuar1 = True
     while continuar1 == True:
         print("\n1. Matricularse a un curso")
-        print("2. Ver curso")
-        print("3. Volver al menú principal")
+        print("2. Desmatricularse a un curso")
+        print("3. Ver curso")
+        print("4. Volver al menú principal")
         rta_alumno = int(input())
 
-        while rta_alumno < 1 or rta_alumno > 3:
-            print("Ingrese una opción válida. (1-3)")
+        while rta_alumno < 1 or rta_alumno > 4:
+            print("Ingrese una opción válida. (1-4)")
             rta_alumno = int(input())
     
         if rta_alumno == 1:
             matriculacion_estudiante(alumno_ingresado1)
-            
+        
         if rta_alumno == 2:
+            desmatricularse(alumno_ingresado1)
+
+        if rta_alumno == 3:
             ver_Cursos(alumno_ingresado1)
             
-        if rta_alumno == 3:
+        if rta_alumno == 4:
             continuar1 = False
 
 
@@ -294,6 +318,25 @@ def matriculacion_estudiante(alumno_ingresado1):
         print("La contraseña es incorrecta, reinténtelo.")
         return None
 
+def desmatricularse(alumno):
+
+    contador1 = 1
+
+    print("Seleccione curso del cual quiere desmatricularse:")
+    for x in alumno.mis_cursos:
+        print(str(contador1) + ". " + x.nombre_curso)
+        contador1 = contador1 + 1
+    
+    numero_curso1 = int(input())
+    while numero_curso1 < 1 or numero_curso1 > len(alumno.mis_cursos):
+        print("Número de curso inválido. Por favor, intenta de nuevo.")
+        numero_curso1 = int(input())
+    
+    del alumno.mis_cursos[numero_curso1-1]
+
+
+
+
 def ver_Cursos(alumno):
     cursos = alumno.cursos_matriculados()
     contador = 1
@@ -313,3 +356,4 @@ def ver_Cursos(alumno):
     print("tpi.pdf")
     print("practica1.pdf")
     return None
+
