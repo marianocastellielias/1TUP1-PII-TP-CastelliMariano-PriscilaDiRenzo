@@ -166,6 +166,16 @@ def menu_principal():
         else:
             pass
         return True
+    
+    if op == 3:
+        cursos_registrados.sort(key=lambda curso: curso.nombre_curso)
+        print("\n--------------------------\n")
+        for x in range(len(cursos_registrados)):
+            print("• Materia: ", cursos_registrados[x].nombre_curso, "\n• Carrera: Tecnicatura Universitaria en Programación\n")
+            
+        print("--------------------------")
+        return True
+
     if op == 4:
         return False
 
