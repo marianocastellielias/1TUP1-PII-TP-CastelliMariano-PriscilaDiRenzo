@@ -218,22 +218,9 @@ def menu_principal(dictar_curso):
         else:
             pass
         return True
-<<<<<<< HEAD
     if op== 2:
         validar_profesor()
         submenuProfesor(dictar_curso)
-=======
-    
-    if op == 3:
-        cursos_registrados.sort(key=lambda curso: curso.nombre_curso)
-        print("\n--------------------------\n")
-        for x in range(len(cursos_registrados)):
-            print("• Materia: ", cursos_registrados[x].nombre_curso, "\n• Carrera: Tecnicatura Universitaria en Programación\n")
-            
-        print("--------------------------")
-        return True
-
->>>>>>> e2697393af71d67b64adc9fefcbdf234e6ea3e8b
     if op == 4:
         return False
 
