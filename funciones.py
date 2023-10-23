@@ -77,7 +77,7 @@ class Estudiante(Usuario):
 
         
         
-cursosProfe = []
+  
 class Profesor(Usuario):
     def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str, titulo: str, anio_egreso: int):
         super().__init__(nombre, apellido, email, contrasenia)
@@ -89,13 +89,22 @@ class Profesor(Usuario):
         return user_profesor
 
     def dictar_curso(self, curso):
-        cursoDictadoProfe = input("Ingrese nombre del curso a dictar:\n")
-        cursoDictadoProfe.append(cursos_registrados) #se agrega curso a dictar a la lista de cursos para todos
-        cursoDictadoProfe.append(cursosProfe)
-        print("Curso creado con exito!\n")
-        print("Nombre curso:", cursoDictadoProfe, "\n")
-        print("Contraseña: ") #contra generada automaticamente
-        submenuProfesor()
+        self.mis_cursos.append(curso)
+
+    
+    def cursos_matriculados(self):
+        cursos_profesor = []
+
+        for x in self.mis_cursos:
+            cursos_profesor.append(x.nombre_curso)
+
+        return cursos_profesor
+    
+    def matricular_en_curso(self, curso):
+        self.mis_cursos.append(curso)
+
+
+        
     
 
     
@@ -114,60 +123,6 @@ class Curso:
             return cod
         
         
-#Datos de profesores 
-
-profesores_registrados = []
-profe1 = Profesor("Alejandra", "Torres", "alejandratorres@gmail.com", "1234", "Profesorado en Informática", "2002")
-profe2 = Profesor("Martín", "Del Valle", "martindelvalle@gmail.com", "2345", "Profesorado en Inglés", "2010")
-profe3 = Profesor("Ayla", "Montes", "aylamontes@gmail.com", "3456", "Licenciatura en Computación", "2019")
-
-profesores_registrados.append(profe1)
-profesores_registrados.append(profe2)
-profesores_registrados.append(profe3)
-
-def validar_profesor():
-    accesoCorreoProfe = False
-    accesoPassProfe = False
-    profesor_ingresado = None
-    correoProfesor = input("Ingrese su email:")
-    for profesor in profesores_registrados:
-        if profesor.email == correoProfesor:
-            accesoCorreoProfe = True
-            print("Usted está en la base de datos de profesores.")
-            contraseña_profesor = input("Ingrese su contraseña")
-            if profesor.contrasenia == contraseña_profesor:
-                print("Ingreso exitoso!")
-                accesoPassProfe = True
-                profesor_ingresado = profesor
-                break
-    
-        if not accesoCorreoProfe:
-            print("¡El correo ingresado no está registrado en el sistema! Debe darse de alta en el alumnado.") 
-            return None
-        elif accesoPassProfe == False:
-                print("La contraseña ingresada es incorrecta. Por favor, inténtelo de nuevo.")
-                return None
-        else:
-            return profesor_ingresado
-
-def submenuProfesor(dictar_curso):
-    print("Ingrese opción:")
-    print("1. Dictar curso")
-    print("2. Ver curso")
-    print("3. Volver al menú principal")
-    opProfe = input()
-
-    if opProfe == 1:
-        dictar_curso()
-    if opProfe == 2:
-        for curso in cursosProfe:
-            contador = contador + 1
-            print("Seleccione curso:")
-            print(f"Curso Nº. {contador}: {cursosProfe}\n")
-            opElegirCurso = int(input())
-            print(cursosProfe[opElegirCurso])
-    if opProfe == 3:
-        menu_principal()
 
 alumnos_registrados = []
 alumno1 = Estudiante("Marcelo", "Gómez", "marcelogomez@gmail.com", "1234", "10001", "2020")
@@ -193,6 +148,8 @@ cursos_registrados.append(curso4)
 cursos_registrados.append(curso5)
 cursos_registrados.append(curso6)
 
+
+
 alumno1.matricular_en_curso(curso1)
 alumno1.matricular_en_curso(curso2)
 alumno2.matricular_en_curso(curso3)
@@ -200,8 +157,91 @@ alumno2.matricular_en_curso(curso4)
 alumno3.matricular_en_curso(curso5)
 alumno3.matricular_en_curso(curso6)
 
+#Datos de profesores 
+
+profesores_registrados = []
+profe1 = Profesor("Alejandra", "Torres", "alejandratorres@gmail.com", "1234", "Profesorado en Informática", "2002")
+profe2 = Profesor("Martín", "Del Valle", "martindelvalle@gmail.com", "2345", "Profesorado en Inglés", "2010")
+profe3 = Profesor("Ayla", "Montes", "aylamontes@gmail.com", "3456", "Licenciatura en Computación", "2019")
+
+profesores_registrados.append(profe1)
+profesores_registrados.append(profe2)
+profesores_registrados.append(profe3)
+
+profe1.matricular_en_curso(curso1)
+profe1.matricular_en_curso(curso2)
+profe2.matricular_en_curso(curso3)
+profe2.matricular_en_curso(curso4)
+profe3.matricular_en_curso(curso5)
+profe3.matricular_en_curso(curso6)
+
+def validar_profesor():
+    accesoCorreoProfe = False
+    accesoPassProfe = False
+    profesor_ingresado = None
+    correoProfesor = input("Ingrese su email:")
+    for profesor in profesores_registrados:
+        if profesor.email == correoProfesor:
+            accesoCorreoProfe = True
+            print("Usted está en la base de datos de profesores.")
+            contrasenia_profesor = str(input("Ingrese su contraseña"))
+            if profesor.contrasenia == contrasenia_profesor:
+                print("Ingreso exitoso!")
+                accesoPassProfe = True
+                profesor_ingresado = profesor
+                break
+    
+    if not accesoCorreoProfe:
+        print("¡El correo ingresado no está registrado en el sistema! Debe darse de alta en el alumnado.") 
+        return None
+    elif accesoPassProfe == False:
+            print("La contraseña ingresada es incorrecta. Por favor, inténtelo de nuevo.")
+            return None
+    else:
+        return profesor_ingresado
+
+def submenuProfesor(profesor_ingresado2):
+    print("Ingrese opción:")
+    print("1. Dictar curso")
+    print("2. Ver curso")
+    print("3. Volver al menú principal")
+    opProfe = int(input())
+
+    if opProfe == 1:
+        dictar_curso(profesor_ingresado2)
+    if opProfe == 2:
+        ver_Cursos(profesor_ingresado2)
+
+        #for curso in cursosProfe:
+        #    contador = contador + 1
+        #    print("Seleccione curso:")
+        #    print(f"Curso Nº. {contador}: {cursosProfe}\n")
+        #    opElegirCurso = int(input())
+        #    print(cursosProfe[opElegirCurso])
+    if opProfe == 3:
+        menu_principal()
+
+def dictar_curso(profesoringresado3):
+
+    curso_temporal = Curso("", "")
+    cursoDictadoProfe = input("Ingrese nombre del curso a dictar:\n")
+    contrasenia_generada = curso_temporal.generar_contrasenia()
+    curso_creado = Curso(cursoDictadoProfe, contrasenia_generada) 
+    cursos_registrados.append(curso_creado)
+    profesoringresado3.dictar_curso(curso_creado)
+    print("Curso creado con exito!\n")
+    print("Nombre curso:", cursoDictadoProfe, "\n")
+    print("Contraseña: ", contrasenia_generada)
+
+        #cursoDictadoProfe.append(cursos_registrados) #se agrega curso a dictar a la lista de cursos para todos
+        #cursoDictadoProfe.append(cursosProfe)
+        #print("Curso creado con exito!\n")
+        #print("Nombre curso:", cursoDictadoProfe, "\n")
+        #print("Contraseña: ") #contra generada automaticamente
+        #submenuProfesor()
+
 #Funciones
-def menu_principal(dictar_curso):
+def menu_principal():
     print("\nIngrese una opción del menú")
     print("1. Ingresar cómo alumno")
     print("2. Ingresar cómo profesor")
@@ -222,8 +262,22 @@ def menu_principal(dictar_curso):
             pass
         return True
     if op== 2:
-        validar_profesor()
-        submenuProfesor(dictar_curso)
+        profesor_ingresado1 = validar_profesor()
+        
+        if profesor_ingresado1 != None: #cambio
+            submenuProfesor(profesor_ingresado1)
+            return True
+        else:
+            pass
+        return True
+
+    if op == 3:
+        
+        for x in cursos_registrados:
+            print("• Materia:", x.nombre_curso)
+            print("• Carrera: Tecnicatura en Programación.")
+        return True
+
     if op == 4:
         return False
 
