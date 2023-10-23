@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 
+
 class Usuario (ABC):
     
     def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str):
@@ -15,7 +16,7 @@ class Usuario (ABC):
         user = self.nombre + self.apellido + self.email
         return user
     
-    @abstractmethod
+   
     def validar_credenciales(self, email_ingresado: str, contrasenia_ingresada: str) -> bool:
         validado = False
 
@@ -68,7 +69,9 @@ class Estudiante(Usuario):
 
         return cursos_estudiante     
 
-
+        
+        
+cursosProfe = []
 class Profesor(Usuario):
     def __init__(self, nombre: str, apellido: str, email: str, contrasenia: str, titulo: str, anio_egreso: int):
         super().__init__(nombre, apellido, email, contrasenia)
@@ -80,7 +83,14 @@ class Profesor(Usuario):
         return user_profesor
 
     def dictar_curso(self, curso):
-        raise NotImplementedError() #Todavía no lo hice..
+        cursoDictadoProfe = input("Ingrese nombre del curso a dictar:\n")
+        cursoDictadoProfe.append(cursos_registrados) #se agrega curso a dictar a la lista de cursos para todos
+        cursoDictadoProfe.append(cursosProfe)
+        print("Curso creado con exito!\n")
+        print("Nombre curso:", cursoDictadoProfe, "\n")
+        print("Contraseña: ") #contra generada automaticamente
+        submenuProfesor()
+    
 
     
 
@@ -96,16 +106,58 @@ class Curso:
         raise NotImplementedError() #Todavía no lo hice.
         
         
-#Datos
+#Datos de profesores 
 
-#profesores_registrados = []
-#profe1 = Profesor("Alejandra", "Torres", "alejandratorres@gmail.com", "1234", "Profesorado en Informática")
-#profe2 = Profesor("Martín", "Del Valle", "martindelvalle@gmail.com", "2345", "Profesorado en Inglés")
-#profe3 = Profesor("Ayla", "Montes", "aylamontes@gmail.com", "3456", "Licenciatura en Computación")
+profesores_registrados = []
+profe1 = Profesor("Alejandra", "Torres", "alejandratorres@gmail.com", "1234", "Profesorado en Informática", "2002")
+profe2 = Profesor("Martín", "Del Valle", "martindelvalle@gmail.com", "2345", "Profesorado en Inglés", "2010")
+profe3 = Profesor("Ayla", "Montes", "aylamontes@gmail.com", "3456", "Licenciatura en Computación", "2019")
 
-#profesores_registrados.append(profe1)
-#profesores_registrados.append(profe2)
-#profesores_registrados.append(profe3)
+profesores_registrados.append(profe1)
+profesores_registrados.append(profe2)
+profesores_registrados.append(profe3)
+
+def validar_profesor():
+    accesoCorreoProfe = False
+    accesoPassProfe = False
+    profesor_ingresado = None
+    correoProfesor = input("Ingrese su email:")
+    for profesor in profesores_registrados:
+        if profesor.email == correoProfesor:
+            print("Usted está en la base de datos de profesores.")
+            contraseña_profesor = input("Ingrese su contraseña")
+            if profesor.contrasenia == contraseña_profesor:
+                print("Ingreso exitoso!")
+                accesoPassProfe = True
+                profesor_ingresado = profesor
+                break
+    
+        if not accesoCorreoProfe:
+            print("¡El correo ingresado no está registrado en el sistema! Debe darse de alta en el alumnado.") 
+            return None
+        elif accesoPassProfe == False:
+                print("La contraseña ingresada es incorrecta. Por favor, inténtelo de nuevo.")
+                return None
+        else:
+            return profesor_ingresado
+
+def submenuProfesor(dictar_curso):
+    print("Ingrese opción:")
+    print("1. Dictar curso")
+    print("2. Ver curso")
+    print("3. Volver al menú principal")
+    opProfe = input()
+
+    if opProfe == 1:
+        dictar_curso()
+    if opProfe == 2:
+        for curso in cursosProfe:
+            contador = contador + 1
+            print("Seleccione curso:")
+            print(f"Curso Nº. {contador}: {cursosProfe}\n")
+            opElegirCurso = int(input())
+            print(cursosProfe[opElegirCurso])
+
 
 alumnos_registrados = []
 alumno1 = Estudiante("Marcelo", "Gómez", "marcelogomez@gmail.com", "1234", "10001", "2020")
@@ -139,7 +191,7 @@ alumno3.matricular_en_curso(curso5)
 alumno3.matricular_en_curso(curso6)
 
 #Funciones
-def menu_principal():
+def menu_principal(dictar_curso):
     print("\nIngrese una opción del menú")
     print("1. Ingresar cómo alumno")
     print("2. Ingresar cómo profesor")
@@ -159,6 +211,9 @@ def menu_principal():
         else:
             pass
         return True
+    if op== 2:
+        validar_profesor()
+        submenuProfesor(dictar_curso)
     if op == 4:
         return False
 
@@ -178,7 +233,7 @@ def validar_estudiante():
                 alumno_ingresado = alumno
                 break
 
-    if acceso_eMail == False:
+    if not acceso_eMail:
         print("¡El correo ingresado no está registrado en el sistema! Debe darse de alta en el alumnado.") 
         return None
     
